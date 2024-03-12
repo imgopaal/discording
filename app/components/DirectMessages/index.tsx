@@ -10,7 +10,9 @@ function DirectMessages() {
 			<Link to={'dm'}>
 				<li
 					className={`${currentPath ? `bg-primary rounded-[15px]` : `bg-gray-300 rounded-full`}
-                max-w-[48px] m-auto  min-w-[48px] min-h-[48px] peer mt-3 cursor-pointer transition ease-out hover:bg-primary hover:rounded-[15px] duration-150 grid place-items-center text-white font-normal text-xl capitalize`}
+                max-w-[48px] m-auto  min-w-[48px] min-h-[48px] peer mt-3 cursor-pointer transition  hover:bg-primary hover:rounded-[15px] duration-150 grid place-items-center text-white font-normal text-xl capitalize
+				active:translate-y-[2px] active:shadow-md transform ease-in-out
+				`}
 				>
 					<FaDiscord className="text-3xl" />
 				</li>
