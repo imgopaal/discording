@@ -5,3 +5,10 @@ type Server = {
 	imageUrl: string | null | undefined
 	notif: boolean
 }
+type Friend = {
+	id: string
+	imageUrl: string
+	imageAlt: string
+	isOnline: boolean
+	name: string
+}

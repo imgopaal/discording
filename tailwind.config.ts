@@ -14,6 +14,7 @@ export default {
 				},
 				text: {
 					100: '#f2f3f5',
+					200: '#949BA4',
 				},
 			},
 		},
