@@ -31,8 +31,8 @@ export default function Navbar() {
 								)}
 							</Link>
 							<div
-								className={`w-[7px] bg-white rounded-full h-2 absolute top-1/2 bottom-1/2 transform -translate-y-1/2 left-[-3px] peer-hover:h-[20px] transition-all ease-out ${
-									currentPath ? `h-[40px] peer-hover:h-[40px]` : notif ? `h-2` : 'peer-hover:h-[20px]'
+								className={`w-[7px] bg-white rounded-full absolute top-1/2 bottom-1/2 transform -translate-y-1/2 left-[-3px] peer-hover:h-[20px] transition-all ease-out ${
+									currentPath ? `h-[40px] peer-hover:h-[40px]` : notif ? `h-2` : 'peer-hover:h-[20px] h-0'
 								}`}
 							></div>
 						</div>
