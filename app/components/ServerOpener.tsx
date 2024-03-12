@@ -19,8 +19,7 @@ function ServerOpener({ server }: { server: Server }) {
 					<img
 						src={imageUrl}
 						alt="server"
-						className={`w-[48px] h-[48px] group-hover:rounded-[16px] rounded-full object-cover
-										 ${currentPath ? `rounded-[16px]` : `rounded-full`}`}
+						className={`${currentPath ? `rounded-[14px]` : `rounded-full`} w-[48px] h-[48px] group-hover:rounded-[14px]  object-cover`}
 					/>
 				) : (
 					initials

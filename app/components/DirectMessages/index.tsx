@@ -1,13 +1,14 @@
 import { Link, useMatches } from '@remix-run/react'
 import { FaDiscord } from 'react-icons/fa6'
+import { ROUTES } from '~/consts'
 import { pathChecker } from '~/functions'
 
 function DirectMessages() {
 	const matches = useMatches()
-	const currentPath = pathChecker('dm', matches)
+	const currentPath = pathChecker(ROUTES.DM, matches)
 	return (
 		<div className="relative">
-			<Link to={'dm'}>
+			<Link to={ROUTES.DM}>
 				<li
 					className={`${currentPath ? `bg-primary rounded-[15px]` : `bg-gray-300 rounded-full`}
                 max-w-[48px] m-auto  min-w-[48px] min-h-[48px] peer mt-3 cursor-pointer transition  hover:bg-primary hover:rounded-[15px] duration-150 grid place-items-center text-white font-normal text-xl capitalize
