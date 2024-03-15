@@ -1,3 +1,6 @@
+import { Outlet } from '@remix-run/react'
+
 export default function DirectMessagesRoute() {
-	return <div>DirectMessagesRoute</div>
+	const abs = 'abs'
+	return <Outlet context={abs} />
 }

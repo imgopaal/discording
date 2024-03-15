@@ -18,7 +18,7 @@ export function createRandomServer(): Server {
 	return {
 		id: faker.string.uuid(),
 		title: faker.lorem.word(),
-		initials: faker.lorem.words(2),
+		initials: faker.lorem.words(4),
 		imageUrl: faker.image.avatar(),
 		notif: faker.datatype.boolean(),
 	}

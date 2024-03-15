@@ -1,5 +1,12 @@
+import { Outlet } from '@remix-run/react'
+
 function DynamicServerPage() {
-	return <div>DynamicServerPage</div>
+	return (
+		<div>
+			DynamicServerPage
+			<Outlet />
+		</div>
+	)
 }
 
 export default DynamicServerPage
