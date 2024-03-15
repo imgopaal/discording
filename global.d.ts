@@ -7,8 +7,9 @@ type Server = {
 }
 type Friend = {
 	id: string
-	imageUrl: string
-	imageAlt: string
-	isOnline: boolean
-	name: string
+	display_picture_url: string
+	display_picture_alt: string
+	is_online: boolean
+	first_name: string
+	last_name: string
 }

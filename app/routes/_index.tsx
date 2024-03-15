@@ -2,7 +2,7 @@ import type { MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 
 export const meta: MetaFunction = () => {
-	return [{ title: 'New Remix App' }, { name: 'description', content: 'Welcome to Remix!' }]
+	return [{ title: 'Discording' }, { name: 'An Amazing Discord Clone', content: 'Welcome to Discording' }]
 }
 
 export default function Index() {
