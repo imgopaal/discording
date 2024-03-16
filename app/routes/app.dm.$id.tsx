@@ -1,9 +1,8 @@
 import { LoaderFunction } from '@remix-run/node'
-import { Outlet } from '@remix-run/react'
-import { PiPhoneCallFill } from 'react-icons/pi'
 import { ReactSVG } from 'react-svg'
-
-import { Add, AddFriend, Call, Emoji, Gif, Gift, Pin, Stickers, UserProfile, VideoCall, Inbox, Help } from '~/icons'
+import Messages from '~/components/Messages'
+import { messages } from '~/dummyData'
+import { Add, AddFriend, Call, Emoji, Gif, Gift, Help, Inbox, Pin, Stickers, UserProfile, VideoCall } from '~/icons'
 
 export const loader: LoaderFunction = async () => {
 	return null
@@ -15,11 +14,13 @@ function ChatBox() {
 	const isOnline = true
 	const name = 'temporary name'
 
-	function authGrow(element: any) {
+	function authGrow(element: HTMLTextAreaElement) {
 		element.style.height = '5px'
 		element.style.height = element.scrollHeight + 'px'
 	}
+	
 	const chatInputIcons = [Gift, Gif, Stickers, Emoji]
+
 	const chatHeaderIcons = [
 		{
 			id: 0,
@@ -47,6 +48,7 @@ function ChatBox() {
 			tooltip: 'Show User Profile',
 		},
 	]
+
 	const chatHeaderIconsLastTwo = [
 		{
 			id: 0,
@@ -62,7 +64,7 @@ function ChatBox() {
 
 	return (
 		<div className="h-full w-[calc(100vw-312px)] relative">
-			<div className="border-gray-500 border-b-[1px] flex flex-row justify-between py-[10.6px] px-[10px] text-white">
+			<div className="border-gray-500 border-b-[1px] flex flex-row justify-between py-[7px] px-[10px] text-white">
 				<div
 					className={`flex rounded-[4px] justify-between items-center group hover:bg-gray-300 cursor-pointer w-[200px]`}
 				>
@@ -82,10 +84,10 @@ function ChatBox() {
 						return (
 							<div
 								key={id}
-								className="tooltip tooltip-bottom before:bg-black before:text-white cursor-pointer mx-[8px]"
+								className="tooltip tooltip-bottom before:bg-black before:text-white cursor-pointer mx-[8px] group"
 								data-tip={tooltip}
 							>
-								<ReactSVG src={icon} className="text-2xl text-gray-700" />
+								<ReactSVG src={icon} className="text-2xl text-gray-700 group-hover:text-text-300" />
 							</div>
 						)
 					})}
@@ -113,29 +115,42 @@ function ChatBox() {
 						return (
 							<div
 								key={id}
-								className="tooltip tooltip-bottom before:bg-black before:text-white cursor-pointer mx-[8px]"
+								className="tooltip tooltip-bottom before:bg-black before:text-white cursor-pointer mx-[8px] group"
 								data-tip={tooltip}
 							>
-								<ReactSVG src={icon} className="text-2xl text-gray-700" />
+								<ReactSVG src={icon} className="text-2xl text-gray-700 group-hover:text-text-300" />
 							</div>
 						)
 					})}
 				</div>
 			</div>
+			{/* Messages */}
+			<div className="relative p-0 m-0 overflow-hidden h-[calc(100% - 330px)]">
+				<Messages messages={messages} />
+			</div>
 			{/* Message Input */}
 			<div className="absolute bottom-6 p-4 pb-0 w-full">
 				<div className="flex flex-row items-start rounded-[8px] bg-gray-800">
-					<ReactSVG src={Add} className="text-3xl text-gray-700 my-[10px] mx-4 cursor-pointer" />
+					<ReactSVG
+						src={Add}
+						className="text-3xl text-gray-700 my-[10px] mx-4 hover:text-text-300 cursor-pointer"
+					/>
 					<textarea
-						className="resize-none max-h-[370px] leading-6 overflow-scroll no-scrollbar rows-1 bg-transparent textarea textarea-bordered w-full h-[10px] focus:outline-none text-text-300  placeholder:text-placeholder-100 text-[16px] border-0 outline-none pl-0"
+						className="resize-none max-h-[370px] leading-7 overflow-scroll no-scrollbar rows-1 bg-transparent textarea textarea-bordered w-full h-[10px] focus:outline-none text-text-300  placeholder:text-placeholder-100 text-[16px] border-0 outline-none pl-0"
 						placeholder="Message @Temporary Name"
 						onInput={e => {
 							authGrow(e.target)
 						}}
-					></textarea>
-					<div className="grid place-items-center gap-6 grid-cols-4 my-[10px] last:mr-6">
+					/>
+					<div className="grid place-items-center gap-6 grid-cols-4 my-[10px] last:mr-6 ">
 						{chatInputIcons.map((icon, index) => {
-							return <ReactSVG key={index} src={icon} className="cursor-pointer text-3xl text-gray-700" />
+							return (
+								<ReactSVG
+									key={index}
+									src={icon}
+									className="cursor-pointer text-3xl text-gray-700 hover:text-text-300"
+								/>
+							)
 						})}
 					</div>
 				</div>
