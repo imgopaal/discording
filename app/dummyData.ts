@@ -3,10 +3,11 @@ import { faker } from '@faker-js/faker'
 export function createRandomFriend(): Friend {
 	return {
 		id: faker.string.uuid(),
-		imageUrl: faker.image.avatar(),
-		imageAlt: faker.lorem.word(),
-		isOnline: faker.datatype.boolean(),
-		name: faker.person.fullName(),
+		display_picture_url: faker.image.avatar(),
+		display_picture_alt: faker.lorem.word(),
+		is_online: faker.datatype.boolean(),
+		first_name: faker.person.firstName(),
+		last_name: faker.person.lastName(),
 	}
 }
 

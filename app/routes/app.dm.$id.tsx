@@ -18,7 +18,7 @@ function ChatBox() {
 		element.style.height = '5px'
 		element.style.height = element.scrollHeight + 'px'
 	}
-	
+
 	const chatInputIcons = [Gift, Gif, Stickers, Emoji]
 
 	const chatHeaderIcons = [
@@ -63,7 +63,7 @@ function ChatBox() {
 	]
 
 	return (
-		<div className="h-full w-[calc(100vw-312px)] relative">
+		<div className="h-full w-[calc(100%-312px)] relative">
 			<div className="border-gray-500 border-b-[1px] flex flex-row justify-between py-[7px] px-[10px] text-white">
 				<div
 					className={`flex rounded-[4px] justify-between items-center group hover:bg-gray-300 cursor-pointer w-[200px]`}
