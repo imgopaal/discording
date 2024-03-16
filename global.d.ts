@@ -13,3 +13,11 @@ type Friend = {
 	first_name: string
 	last_name: string
 }
+type Message = {
+	message_id: string
+	message: string
+	time: Date
+	imageUrl: string
+	imageAlt: string
+	full_name:string
+}
