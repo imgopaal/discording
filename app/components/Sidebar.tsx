@@ -1,4 +1,4 @@
-import { useMatches } from '@remix-run/react'
+import { Link, useMatches } from '@remix-run/react'
 import { BiPlus } from 'react-icons/bi'
 import { ROUTES } from '~/consts'
 import { pathChecker } from '~/functions'
@@ -7,23 +7,20 @@ import FriendChatOpener from './FriendChatOpener'
 import { LoaderFunction } from '@remix-run/node'
 import { useState } from 'react'
 import { FiHeadphones } from 'react-icons/fi'
-import { IoMdMic,IoMdMicOff } from 'react-icons/io'
+import { IoMdMic, IoMdMicOff } from 'react-icons/io'
 import { IoSettingsSharp } from 'react-icons/io5'
 import { TbHeadphonesOff } from 'react-icons/tb'
 import { ReactSVG } from 'react-svg'
 import { supabase } from 'supbase-config'
-import { Friends,Nitro,Shop } from '~/icons'
+import { Friends, Nitro, Shop } from '~/icons'
 
 export const loader: LoaderFunction = async () => {
 	const { data: users, error: usersError } = await supabase.from('users').select('*').eq('id', process.env.MY_USER_ID)
-	console.log(users, 'this is my data')
+	if (usersError) console.log(usersError)
 	return users
 }
 
 export default function Sidebar({ friends }: { friends: Friend[] }) {
-	// const loaderData = useLoaderData<typeof loader>()
-	// const myData = loaderData.find((item: Friend) => item.id === process.env.MY_USER_ID)
-	// console.log(myData, 'this is my data')
 	const data = {
 		display_picture_alt: 'my display picture',
 		display_picture_url: 'https://avatars.githubusercontent.com/u/24633393?v=4',
@@ -35,26 +32,35 @@ export default function Sidebar({ friends }: { friends: Friend[] }) {
 		{
 			id: 0,
 			icon: <ReactSVG src={Friends} className="text-3xl" />,
+			url: 'friends',
 			title: 'Friends',
 		},
 		{
 			id: 1,
 			icon: <ReactSVG src={Nitro} className="text-3xl" />,
+			url: 'nitro',
 			title: 'Nitro',
 		},
 		{
 			id: 2,
 			icon: <ReactSVG src={Shop} className="text-3xl" />,
+			url: 'shop',
 			title: 'Shop',
 		},
 	]
 	const matches = useMatches()
-	const isThisMyDM = pathChecker(ROUTES.DM, matches)
+	const chatPage = pathChecker(ROUTES.DM, matches)
+	const friendsPage = pathChecker(ROUTES.FRIENDS, matches)
+	const nitroPage = pathChecker(ROUTES.NITRO, matches)
+	const shopPage = pathChecker(ROUTES.SHOP, matches)
+	const validPages = chatPage || friendsPage || nitroPage || shopPage
 	const [micOn, setMicOn] = useState(true)
 	const [headphonesOn, setHeadphonesOn] = useState(true)
+	const currentRoute = matches[matches.length - 1]
+
 	return (
 		<div className="h-full min-w-[240px] max-w-[240px] bg-gray-200">
-			{isThisMyDM && (
+			{validPages && (
 				<div className="relative h-full">
 					{/* Search Bar */}
 					<div className="border-gray-100 border-b-[1px] py-[10px] px-[10px] text-white">
@@ -69,15 +75,18 @@ export default function Sidebar({ friends }: { friends: Friend[] }) {
 						{/* Friends Actions */}
 						<div className="py-[10px] px-[10px]">
 							{actions.map(item => {
-								const { id, icon, title } = item
+								const { id, icon, url, title } = item
 								return (
-									<button
-										key={id}
-										className="btn shadow-none no-animation w-full bg-transparent hover:bg-gray-300 hover:text-white flex justify-start border-0 rounded-[4px]"
-									>
-										{icon}
-										<span className="ml-2 font-medium">{title}</span>
-									</button>
+									<Link key={id} to={url}>
+										<button
+											className={`btn shadow-none no-animation w-full hover:bg-gray-300 hover:text-white flex justify-start border-0 rounded-[4px] mb-[2px]
+										${currentRoute.pathname.includes(url) ? 'bg-gray-300 text-white' : 'bg-transparent'}
+										`}
+										>
+											{icon}
+											<span className="ml-2 font-medium">{title}</span>
+										</button>
+									</Link>
 								)
 							})}
 						</div>

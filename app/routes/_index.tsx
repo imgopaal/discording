@@ -14,7 +14,7 @@ export default function Index() {
 						Discording
 					</div>
 					<div className="mx-auto">
-						<Link to={'/app'}>
+						<Link to={'/app/dm'}>
 							<button className="btn btn-primary bg-white w-auto rounded-full mt-6 hover:bg-slate-200">
 								Open Discording
 							</button>
