@@ -1,4 +1,4 @@
-import { Link, useMatches } from '@remix-run/react'
+import { Link, useLoaderData, useMatches } from '@remix-run/react'
 import { BiPlus } from 'react-icons/bi'
 import { ROUTES } from '~/consts'
 import { pathChecker } from '~/functions'
@@ -15,12 +15,17 @@ import { supabase } from 'supbase-config'
 import { Friends, Nitro, Shop } from '~/icons'
 
 export const loader: LoaderFunction = async () => {
-	const { data: users, error: usersError } = await supabase.from('users').select('*').eq('id', process.env.MY_USER_ID)
+	const { data: myData, error: usersError } = await supabase
+		.from('users')
+		.select('id')
+		.eq('id', process.env.MY_USER_ID)
 	if (usersError) console.log(usersError)
-	return users
+	console.log(myData, 'my data in loader')
+	return myData
 }
 
-export default function Sidebar({ friends }: { friends: Friend[] }) {
+export default function Sidebar() {
+	const { friends } = useLoaderData<typeof loader>()
 	const data = {
 		display_picture_alt: 'my display picture',
 		display_picture_url: 'https://avatars.githubusercontent.com/u/24633393?v=4',
@@ -79,8 +84,8 @@ export default function Sidebar({ friends }: { friends: Friend[] }) {
 								return (
 									<Link key={id} to={url}>
 										<button
-											className={`btn shadow-none no-animation w-full hover:bg-gray-300 hover:text-white flex justify-start border-0 rounded-[4px] mb-[2px]
-										${currentRoute.pathname.includes(url) ? 'bg-gray-300 text-white' : 'bg-transparent'}
+											className={`btn h-[42px] py-2 px-3 min-h-[42px] shadow-none no-animation w-full hover:bg-gray-300 hover:text-white flex justify-start border-0 rounded-[4px] mb-[2px]
+										${currentRoute.pathname.includes(url) ? 'bg-gray-400 text-white hover:bg-gray-400' : 'bg-transparent'}
 										`}
 										>
 											{icon}
@@ -106,6 +111,7 @@ export default function Sidebar({ friends }: { friends: Friend[] }) {
 						</div>
 						{/* profile info */}
 					</div>
+					{/* Profile */}
 					<div className="bg-gray-600 w-full flex-row absolute flex p-1 bottom-0 h-[53px]">
 						<div className="flex flex-row items-center hover:bg-gray-400 rounded-[4px] p-1 cursor-pointer w-1/2">
 							<div className="relative w-8 h-8">
