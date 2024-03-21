@@ -1,19 +1,23 @@
-import { LoaderFunction } from '@remix-run/node'
+import { LoaderFunctionArgs } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 import { ReactSVG } from 'react-svg'
+import { supabase } from 'supbase-config'
 import Messages from '~/components/Messages'
 import { messages } from '~/dummyData'
 import { Add, AddFriend, Call, Emoji, Gif, Gift, Help, Inbox, Pin, Stickers, UserProfile, VideoCall } from '~/icons'
 
-export const loader: LoaderFunction = async () => {
-	return null
+export async function loader({ params }: LoaderFunctionArgs) {
+	const userId = params.id
+	const user = await supabase.from('users').select('*').eq('id', userId)
+	return {
+		user: user && user.data?.[0],
+	}
 }
 
 function ChatBox() {
-	const imageUrl = 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1102.jpg'
-	const imageAlt = 'fds'
-	const isOnline = true
-	const name = 'temporary name'
-
+	const loaderData = useLoaderData<typeof loader>()
+	const { first_name, last_name, display_picture_url, display_picture_alt, is_online } = loaderData.user
+	const full_name = `${first_name} ${last_name}`
 	function authGrow(element: HTMLTextAreaElement) {
 		element.style.height = '5px'
 		element.style.height = element.scrollHeight + 'px'
@@ -69,15 +73,19 @@ function ChatBox() {
 					className={`flex rounded-[4px] justify-between items-center group hover:bg-gray-300 cursor-pointer w-[200px]`}
 				>
 					<div className="relative">
-						<img src={imageUrl} alt={imageAlt} className="h-6 w-6 rounded-full mr-4" />
+						<img
+							src={display_picture_url}
+							alt={display_picture_alt}
+							className="h-6 w-6 rounded-full mr-4"
+						/>
 						<div
-							title={isOnline ? 'Online' : 'Offline'}
+							title={is_online ? 'Online' : 'Offline'}
 							className={`absolute bottom-0 right-[10px] w-2 h-2  rounded-full border-2 border-white ${
-								isOnline ? 'bg-[#23A55A]' : 'bg-gray-200'
+								is_online ? 'bg-[#23A55A]' : 'bg-gray-200'
 							}`}
 						></div>
 					</div>
-					<p className="w-9/12 group-hover:text-white capitalize truncate">{name}</p>
+					<p className="w-9/12 group-hover:text-white capitalize truncate">{full_name}</p>
 				</div>
 				<div className="flex flex-row items-center">
 					{chatHeaderIcons.map(({ id, icon, tooltip }) => {
