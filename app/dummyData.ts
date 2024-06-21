@@ -40,5 +40,5 @@ export function createMessages(): Message {
 }
 
 export const messages: Message[] = faker.helpers.multiple(createMessages, {
-	count: 200,
+	count: 20,
 })
